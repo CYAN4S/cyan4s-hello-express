@@ -15,11 +15,23 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+/**
+ * morgan 미들웨어가 로그 기록을 해줍니다.
+ * 함수의 인자로 dev, short, common, combined 등을 사용할 수 있습니다.
+ * 파일이나 데이터베이스에 저장할 때는 winston 모듈을 권장합니다.
+ */
 app.use(logger("dev"));
+
+/**
+ * static 미들웨어는 정적인 파일들을 제공합니다.
+ * 함수의 인자로 정적 파일들이 있는 폴더를 지정합니다.
+ */
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("secret code"));
+
+
 app.use(
   session({
     resave: false,
