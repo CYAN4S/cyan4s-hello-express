@@ -91,7 +91,85 @@ res.render(/*템플릿 파일 경로*/, {/*변수*/})
 `render` 메서드는 템플릿 엔진을 렌더링할 때 사용합니다.
 
 ## Pug 템플릿 엔진
+
+
 ### HTML
+- 기초
+```
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+```
+
+- `id`, `class`
+`div` 태그인 경우 생략 가능
+```
+#id-name
+.class-name
+span#expamle
+```
+
+- HTML 텍스트
+```
+p Hello, world!
+```
+
 ### 변수
+`res.render` 메서드의 변수 객체 인자를 사용하여 변수를 템플릿에 렌더링할 수 있습니다. 메서드의 두 번째 인자를 사용하는 대신 `res.locals`를 사용할 수도 있습니다.
+```
+h1= title
+p Welcome to #{title}
+p!= title (이스케이프를 원하지 않을 경우)
+```
+Pug 내부에 직접 변수를 선언할 수도 있습니다.
+```
+- var x = "String!"
+```
 ### 반복문, 조건문
-### `include`, `extends`, `block`
+```
+ul
+    each x in [1, 2, 3]
+        li= x
+
+    each x, i in ["a", "b", "c"]
+        li= i + ": " + x
+
+    if isLoggedIn
+        div Hi!
+    else
+        div Who?
+
+    case s
+        when 0
+            p ZERO
+        default
+            p NONE
+```
+### `include`
+다른 Pug, HTML을 넣을 수 있습니다.
+```
+header
+    a Home
+```
+```
+include header
+    main
+```
+
+### `extends`, `block`
+레이아웃을 정할 수 있습니다.
+```
+doctype html
+html
+    head
+    body
+        block content
+```
+```
+extends layout
+
+block content
+    main
+```
